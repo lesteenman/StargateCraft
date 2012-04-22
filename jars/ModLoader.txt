@@ -1,0 +1,8 @@
+Apr 22, 2012 2:02:51 PM net.minecraft.src.ModLoader init
+FINE: ModLoader 1.2.5 Initializing...
+Apr 22, 2012 2:02:51 PM net.minecraft.src.ModLoader readFromClassPath
+FINER: Adding mods from /home/dolor/MCP/bin/minecraft
+Apr 22, 2012 2:02:51 PM net.minecraft.src.ModLoader readFromClassPath
+FINER: Directory found.
+Apr 22, 2012 2:02:51 PM net.minecraft.src.ModLoader addAllRenderers
+FINE: Initialized

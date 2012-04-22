@@ -1,6 +1,22 @@
+.gitignore*
+
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# MCP Files #
+*.sh
+*.bat
+conf/
+docs/
+eclipse/
+logs/
+md5s
+runtime/
+temp/
+version
+CHANGELOG
+LICENSE
