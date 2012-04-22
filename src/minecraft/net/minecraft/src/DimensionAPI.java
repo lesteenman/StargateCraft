@@ -32,6 +32,7 @@ public class DimensionAPI
 		}
         if ((ispecialteleportation.canTeleportFromDimension().contains(Integer.valueOf(j)) || j == worldproviderbase.getDimensionID()))
         {
+        	System.out.println("setInPortal(worldProvider[" + worldproviderbase.getDimensionID() + "], minecraft, entity, ispecialteleporter, blockPortalBase)");
             if (ispecialteleportation.isPortalImmediate())
             {
                 usePortal(worldproviderbase, minecraft, entityplayersp, ispecialteleportation);

@@ -1,4 +1,4 @@
-//package net.minecraft.src;
+package net.minecraft.src;
 //Uncomment that line if you use MCP.
 
 import java.lang.annotation.*;

@@ -20,6 +20,7 @@ logs/
 md5s
 runtime/
 temp/
+jars/
 version
 CHANGELOG
 LICENSE
