@@ -2,7 +2,18 @@ package net.minecraft.src;
 import net.minecraft.src.sgc.*;
 
 public class mod_SGC extends BaseMod {
+	
+	public static final String[] glyphs = {
+			"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", 
+			"t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"
+	};
+	public static mod_SGC instance;
+	public static String modFolder = "/sgc";
 
+	public mod_SGC() {
+		instance = this;
+	}
+	
 	@Override
 	public String getVersion() {
 		return "0.1";

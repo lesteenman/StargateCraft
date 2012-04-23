@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.Tessellator;
+import net.minecraft.src.mod_SGC;
 
 public class GUIDHD extends net.minecraft.src.GuiScreen{
 
@@ -147,10 +148,11 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
             	if (dfm < 0.5) {
             		//Clicked inside the circle, tested
             		int button = buttonForCoordinates(corX , corY);
-            		System.out.println("Clicked button " + button);
-            		
+           		
             		if (button == 0)
             			this.dial();
+            		else if (button >= 1)
+            			System.out.println("Dialed " + mod_SGC.glyphs[button - 1]);
             	}
             }
     	}
