@@ -11,7 +11,7 @@ bobView:true
 anaglyph3d:false
 advancedOpengl:false
 fpsLimit:1
-difficulty:2
+difficulty:0
 fancyGraphics:true
 ao:true
 clouds:true

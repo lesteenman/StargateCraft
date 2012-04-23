@@ -1,16 +1,16 @@
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader init
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader init
 FINE: ModLoader 1.2.5 Initializing...
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader readFromClassPath
-FINER: Adding mods from /home/dolor/MCP/eclipse/Client/bin
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader readFromClassPath
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader readFromClassPath
+FINER: Adding mods from C:\Users\Dolor\workspace\MCP\eclipse\Client\bin
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader readFromClassPath
 FINER: Directory found.
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader addMod
-FINE: Mod Initialized: "mod_SGC 0.1" from mod_SGC.class
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader addMod
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader addMod
 FINE: Mod Initialized: "mod_DimensionAPI 1.4 for MC 1.2.5" from mod_DimensionAPI.class
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader init
-FINE: Mod Loaded: "mod_SGC 0.1"
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader init
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader addMod
+FINE: Mod Initialized: "mod_SGC 0.1" from mod_SGC.class
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader init
 FINE: Mod Loaded: "mod_DimensionAPI 1.4 for MC 1.2.5"
-Apr 22, 2012 7:14:52 PM net.minecraft.src.ModLoader addAllRenderers
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader init
+FINE: Mod Loaded: "mod_SGC 0.1"
+Apr 23, 2012 2:36:25 AM net.minecraft.src.ModLoader addAllRenderers
 FINE: Initialized
