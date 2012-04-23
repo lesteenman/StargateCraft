@@ -1,4 +1,4 @@
-package net.minecraft.src.sgc;
+package net.minecraft.src.sgc.blocks;
 
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
@@ -13,6 +13,8 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.Teleporter;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldProviderBase;
+import net.minecraft.src.sgc.SGCDimensionModel;
+import net.minecraft.src.sgc.WorldProviderSGCBase;
 
 /**
  * Used for the portal blocks of the stargate, or the Event Horizon.

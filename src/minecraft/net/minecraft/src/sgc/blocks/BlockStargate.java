@@ -1,7 +1,11 @@
-package net.minecraft.src.sgc;
+package net.minecraft.src.sgc.blocks;
 import javax.jws.Oneway;
 
 import net.minecraft.src.*;
+import net.minecraft.src.sgc.SGCBlocks;
+import net.minecraft.src.sgc.SGCDimensionModel;
+import net.minecraft.src.sgc.SGCDimensions;
+import net.minecraft.src.sgc.WorldProviderSGCBase;
 
 public class BlockStargate extends BlockObsidian {
 
@@ -11,7 +15,7 @@ public class BlockStargate extends BlockObsidian {
 	
 	@Override
     public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
-    	if (world.getBlockId(x, y + 1, z) == 0) {
+    	/*if (world.getBlockId(x, y + 1, z) == 0) {
     		world.setBlock(x, y + 1, z, SGCBlocks.eventHorizonBlockId);
     		BlockPortalEventHorizon eventHorizon = SGCBlocks.blockEventHorizon;
     		
@@ -24,7 +28,7 @@ public class BlockStargate extends BlockObsidian {
     		System.out.println("Event horizon's model dimension ID: " + model.getDimensionID());
     		eventHorizon.setDimensionModel(model);
     		return true;
-    	}
+    	}*/
     	return false;
     }
 	
