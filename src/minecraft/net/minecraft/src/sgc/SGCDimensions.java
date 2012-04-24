@@ -48,7 +48,7 @@ public class SGCDimensions {
 		minecraftia.set("sgY", stargateLocation.get(1));
 		minecraftia.set("sgZ", stargateLocation.get(2));
 		json.set("minecraftia", minecraftia);
-		System.out.println("Should be about to write the JSON to " + sjr.getWorldJSONFile().getAbsolutePath() + " > " + json.toString());
+		System.out.println("Should be about to write the JSON to " + sjr.getWorldJSONFile().getAbsolutePath() + " > " + json.serialize());
 		sjr.writeJSONFile(json, sjr.getWorldJSONFile());
 	}
 	

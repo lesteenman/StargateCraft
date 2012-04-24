@@ -83,11 +83,13 @@ public class SGCJSONProcessor extends SGCDimensions {
 	 */
 	public void writeJSONFile(JSONObject json, File path) {
 		String serializedJSON = json.serialize();
+		System.out.println("Writing: " + serializedJSON);
 		FileOutputStream os;
 		try {
 			path.createNewFile();
 			Writer w = new FileWriter(path);
 			w.write(serializedJSON);
+			w.flush();
 		} catch (FileNotFoundException e) {
 			System.out.println("File was not found");
 			e.printStackTrace();
