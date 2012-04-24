@@ -1,4 +1,6 @@
 package net.minecraft.src.sgc.blocks;
+import java.util.Vector;
+
 import javax.jws.Oneway;
 
 import net.minecraft.src.*;
@@ -13,23 +15,71 @@ public class BlockStargate extends BlockObsidian {
 		super(par1, par2);
 	}
 	
-	@Override
-    public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player) {
-    	/*if (world.getBlockId(x, y + 1, z) == 0) {
-    		world.setBlock(x, y + 1, z, SGCBlocks.eventHorizonBlockId);
-    		BlockPortalEventHorizon eventHorizon = SGCBlocks.blockEventHorizon;
-    		
-    		SGCDimensionModel model = SGCDimensions.getModelForAddress("AAAAAA");
-    		WorldProviderSGCBase provider = model.getWorldProvider();
-    		provider.setDimensionModel(model);
-    	
-    		//dimensionModel.setWorldProvider(provider);
-    		System.out.println("Gave the event horizon a model");
-    		System.out.println("Event horizon's model dimension ID: " + model.getDimensionID());
-    		eventHorizon.setDimensionModel(model);
-    		return true;
-    	}*/
-    	return false;
-    }
+	/**
+	 * Attempts to place a new, complete stargate as close to the designated location as possible.
+	 * @param i
+	 * @param j
+	 * @param k
+	 */
+	public Vector<Integer> generateStargateAround(World world, int i, int j, int k) {
+		int x, y, z;
+		//Find empty location
+		//TODO: Implement empty location finding
+		x = i; y = j; z = k;
+		
+		//Place the gate
+		this.generateStargateAt(world, i, j, k);
+		
+		Vector<Integer> v = new Vector<Integer>();
+		v.add(i); v.add(j);	v.add(k);
+		return v;
+	}
 	
+	/**
+	 * Places a complete stargate, with the center bottom block being at the given position.
+	 * @param i
+	 * @param j
+	 * @param k
+	 */
+	public void generateStargateAt(World world, int i, int j, int k) {
+		//Bottom
+		world.setBlock(i, j, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 1, j, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 1, j, k, SGCBlocks.stargateBlockID);
+		
+		//Top
+		world.setBlock(i, j + 8, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 1, j + 8, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 1, j + 8, k, SGCBlocks.stargateBlockID);
+		
+		//Lower left corner
+		world.setBlock(i - 2, j + 1, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 3, j + 1, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 3, j + 2, k, SGCBlocks.stargateBlockID);
+		
+		//Lower right corner
+		world.setBlock(i + 2, j + 1, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 3, j + 1, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 3, j + 2, k, SGCBlocks.stargateBlockID);
+		
+		//Upper left corner
+		world.setBlock(i - 2, j + 7, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 3, j + 7, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 3, j + 6, k, SGCBlocks.stargateBlockID);
+		
+		//Upper right corner
+		world.setBlock(i + 2, j + 7, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 3, j + 7, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 3, j + 6, k, SGCBlocks.stargateBlockID);
+		
+		//Left
+		world.setBlock(i - 4, j + 3, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 4, j + 4, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i - 4, j + 5, k, SGCBlocks.stargateBlockID);
+		
+		//Right
+		world.setBlock(i + 4, j + 3, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 4, j + 4, k, SGCBlocks.stargateBlockID);
+		world.setBlock(i + 4, j + 5, k, SGCBlocks.stargateBlockID);
+	}
 }

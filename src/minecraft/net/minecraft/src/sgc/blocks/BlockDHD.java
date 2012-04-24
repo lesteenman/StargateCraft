@@ -5,6 +5,8 @@ package net.minecraft.src.sgc.blocks;
  * http://www.zidmc.com/index.php?topic=2033.0
  */
 
+import java.util.Vector;
+
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Material;
@@ -29,7 +31,7 @@ public class BlockDHD extends BlockContainer {
 		
 		ModLoader.registerTileEntity(net.minecraft.src.sgc.TileEntityDHD.class, "TileEntityDHD", new TileEntityRendererDHD());
 		modelID = ModLoader.getUniqueBlockModelID(mod_SGC.instance, true);
-		this.setBlockBounds(0f, 0f, 0f, 1f, 1.1f, 1f);
+		this.setBlockBounds(-0.04f, 0f, -0.04f, 1.04f, 1.1f, 1.04f);
 	}
 
 	@Override
@@ -45,6 +47,16 @@ public class BlockDHD extends BlockContainer {
 		}
 		ModLoader.getMinecraftInstance().displayGuiScreen(new GUIDHD((TileEntityDHD) world.getBlockTileEntity(x, y, z)));
 		return true;
+    }
+
+    /**
+     * Called whenever the block is added into the world. Args: world, x, y, z
+     */
+    public void onBlockAdded(World world, int i, int j, int k)
+    {
+    	Vector<Integer> l = SGCBlocks.blockStargate.generateStargateAround(world, i, j, k - 10);
+    	TileEntityDHD tileEntity = (TileEntityDHD) world.getBlockTileEntity(i, j, k);
+    	tileEntity.setStargateLocation(l);
     }
 
     public TileEntity getBlockEntity()

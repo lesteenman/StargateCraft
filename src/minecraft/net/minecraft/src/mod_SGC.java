@@ -8,7 +8,8 @@ public class mod_SGC extends BaseMod {
 			"t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"
 	};
 	public static mod_SGC instance;
-	public static String modFolder = "/sgc";
+	public static final String modFolder = "/sgc";
+	public static SGCDimensions dimensions;
 
 	public mod_SGC() {
 		instance = this;
@@ -24,6 +25,8 @@ public class mod_SGC extends BaseMod {
 		System.out.println("mod_SGC loaded!");
 		
 		new net.minecraft.src.sgc.SGCBlocks();
+		
+		dimensions = new SGCDimensions();
 		
 		//Some test code to try if we can load worldproviders based on a name
 		try {

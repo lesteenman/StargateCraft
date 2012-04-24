@@ -1,5 +1,7 @@
 package net.minecraft.src.sgc;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.src.GuiButton;
@@ -28,6 +30,10 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
 	private static double dhdSecondInnerRadPerc = 0.66;
 	private static double dhdSecondOuterRadPerc = 0.92;
 	
+	//Image map
+	private int[] glyphTextures;
+	ArrayList<Integer> selectedGlyphs;
+	
 	/**
 	 * Won't be implemented for now, merely created to save this link:
 	 * http://www.youtube.com/watch?v=NnF6TyHjB1o
@@ -36,6 +42,36 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
 	public GUIDHD(TileEntityDHD tileEntity) {
 		super();
 		this.tileEntity = tileEntity;
+		selectedGlyphs = new ArrayList<Integer>();
+	}
+	
+	private void loadGlyphTextures() {
+		if (mc == null)
+			System.out.println("mc was null!");
+		if (mc.renderEngine == null)
+			System.out.println("renderEngine was null!");
+		System.out.println("First texture would be " + mc.renderEngine.getTexture("sgc/images/Glyph_01.png"));
+		glyphTextures = new int[]{
+				mc.renderEngine.getTexture("sgc/images/Glyph_01.png"), mc.renderEngine.getTexture("sgc/images/Glyph_02.png"), 
+				mc.renderEngine.getTexture("sgc/images/Glyph_03.png"), mc.renderEngine.getTexture("sgc/images/Glyph_04.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_05.png"), mc.renderEngine.getTexture("sgc/images/Glyph_06.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_07.png"), mc.renderEngine.getTexture("sgc/images/Glyph_08.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_09.png"), mc.renderEngine.getTexture("sgc/images/Glyph_10.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_11.png"), mc.renderEngine.getTexture("sgc/images/Glyph_12.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_13.png"), mc.renderEngine.getTexture("sgc/images/Glyph_14.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_15.png"), mc.renderEngine.getTexture("sgc/images/Glyph_16.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_17.png"), mc.renderEngine.getTexture("sgc/images/Glyph_18.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_19.png"), mc.renderEngine.getTexture("sgc/images/Glyph_20.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_21.png"), mc.renderEngine.getTexture("sgc/images/Glyph_22.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_23.png"), mc.renderEngine.getTexture("sgc/images/Glyph_24.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_25.png"), mc.renderEngine.getTexture("sgc/images/Glyph_26.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_27.png"), mc.renderEngine.getTexture("sgc/images/Glyph_28.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_29.png"), mc.renderEngine.getTexture("sgc/images/Glyph_30.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_31.png"), mc.renderEngine.getTexture("sgc/images/Glyph_32.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_33.png"), mc.renderEngine.getTexture("sgc/images/Glyph_34.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_35.png"), mc.renderEngine.getTexture("sgc/images/Glyph_36.png"),
+				mc.renderEngine.getTexture("sgc/images/Glyph_37.png"), mc.renderEngine.getTexture("sgc/images/Glyph_38.png"),
+		};
 	}
 	
 	@Override
@@ -48,6 +84,8 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
 		
 		controlList.add(dialScreenButton);
 		controlList.add(worldListButton);
+
+		this.loadGlyphTextures();
 	}
 	
 	public static void drawFullCircle(int cx, int cy, double radius, float r, float g, float b, float a) {
@@ -77,28 +115,17 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
         float f1 = 1;//0.0390625F;
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x + 0, y + h, zLevel, 0, h);
-        tessellator.addVertexWithUV(x + w, y + h, zLevel, w, h);
-        tessellator.addVertexWithUV(x + w, y + 0, zLevel, w, 0);
+        tessellator.addVertexWithUV(x + 0, y + h, zLevel, 0, 1);
+        tessellator.addVertexWithUV(x + w, y + h, zLevel, 1, 1);
+        tessellator.addVertexWithUV(x + w, y + 0, zLevel, 1, 0);
         tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
         tessellator.draw();
     }
-
-    /**
-     * Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height
-     */
-    public void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
-    {
-        float f = 1;//0.0390625F;
-        float f1 = 1;//0.0390625F;
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(par1 + 0, par2 + par6, zLevel, (float)(par3 + 0) * f, (float)(par4 + par6) * f1);
-        tessellator.addVertexWithUV(par1 + par5, par2 + par6, zLevel, (float)(par3 + par5) * f, (float)(par4 + par6) * f1);
-        tessellator.addVertexWithUV(par1 + par5, par2 + 0, zLevel, (float)(par3 + par5) * f, (float)(par4 + 0) * f1);
-        tessellator.addVertexWithUV(par1 + 0, par2 + 0, zLevel, (float)(par3 + 0) * f, (float)(par4 + 0) * f1);
-        tessellator.draw();
-    }
+    
+    private static int buttonsPerCircle = 18;
+    private static double buttonGrowthPerc = 1.08;
+    private static double outerGlyphScale = 0.8;
+    private static double innerGlyphScale = 0.5;
     
     /**
      * Draws the background (i is always 0 as of 1.2.2)
@@ -109,21 +136,94 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
     	
     	//Full background circle
     	dhdRadius = Math.min(width - 20, height - 50) / 2;
-    	drawFullCircle(dhdCX, dhdCY, dhdRadius, 121/255f, 193/255f, 251/255f, 0.8f);
+    	drawFullCircle(dhdCX, dhdCY, dhdRadius * 1.02, 185/255f, 185/255f, 185/255f, 1f);
+    	drawFullCircle(dhdCX, dhdCY, dhdRadius, 135/255f, 135/255f, 135/255f, 0.8f);
     	
     	//Center button circle
     	double centerButtonRadius = dhdRadius * (dhdCenterRadPerc);
-    	drawFullCircle(dhdCX, dhdCY, centerButtonRadius, 1, 62/255f, 62/255f, 1);
+    	drawFullCircle(dhdCX, dhdCY, centerButtonRadius * 1.05, 185/255f, 185/255f, 185/255f, 1);
+    	drawFullCircle(dhdCX, dhdCY, centerButtonRadius, 1f, 130/255f, 0f, 1);
 
-    	GL11.glPushMatrix();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    	//Draw outer buttons
+    	int imgH = (int) (dhdRadius * buttonGrowthPerc * (dhdSecondOuterRadPerc - dhdSecondInnerRadPerc));
+    	int imgW = (int) (imgH * 1.03);
+    	int imgX = -imgW / 2;
+    	int imgY = -(int) (dhdSecondOuterRadPerc * dhdRadius);
+    	
+        GL11.glPushMatrix();
+        GL11.glColor3d(1.0, 1.0, 1.0);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("sgc/images/DHDOuterButton.png"));
         GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glScaled(0.3, 0.3, 0.3);
-        GL11.glTranslated(150, 150, 0);
-        //drawTexturedModalRect(50, 50, 0, 0, 73, 73);
-        drawImage(50, 50, 75, 73);
+        
+        GL11.glTranslated(dhdCX, dhdCY, 0); // Set the origin to be in the center
+        
+        GL11.glRotatef(-360/19, 0, 0, 1);
+        for (int i = 0; i <= 5; i++) {
+        	GL11.glRotatef(360/19, 0, 0, 1);
+        	
+        	drawImage(imgX, imgY, imgW, imgH);
+        }
+        
+        //Draw the outer glyphs
+    	imgH = (int) (dhdRadius * outerGlyphScale * (dhdSecondOuterRadPerc - dhdSecondInnerRadPerc));
+    	imgW = (int) (imgH * 1.03);
+    	imgX = -imgW / 2;
+    	imgY = -(int) (dhdSecondOuterRadPerc * dhdRadius);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        
+        GL11.glRotatef(-360/19, 0, 0, 1);
+        for (int i = 0; i <= buttonsPerCircle; i++) {
+        	GL11.glRotatef(360/19, 0, 0, 1);
+        	
+        	if (selectedGlyphs.contains(19 + i))
+                GL11.glColor4f(1.0F, 0.0F, 1.0F, 1.0F);
+        	else
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        	
+        	GL11.glBindTexture(GL11.GL_TEXTURE_2D, glyphTextures[17 + i]);
+        	drawImage(imgX, imgY, imgW, imgH);
+        }
+        
+        GL11.glPopMatrix();
+
+        //Draw inner buttons
+    	imgH = (int) (dhdRadius * buttonGrowthPerc * (dhdFirstOuterRadPerc - dhdFirstInnerRadPerc));
+    	imgW = (int) (imgH * 0.612); //Real image width/height
+    	imgX = -imgW / 2;
+    	imgY = -(int) (dhdFirstOuterRadPerc * dhdRadius);
+    	
+        GL11.glPushMatrix();
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("sgc/images/DHDInnerButton.png"));
+        GL11.glDisable(GL11.GL_LIGHTING);
+        
+        GL11.glTranslated(dhdCX, dhdCY, 0); // Set the origin to be in the center
+        
+        GL11.glRotatef(-360/19, 0, 0, 1);
+        for (int i = 0; i <= 5; i++) {
+        	GL11.glRotatef(360/19, 0, 0, 1);
+        	drawImage(imgX, imgY, imgW, imgH);
+        }
+        
+        //Draw the inner glyphs
+    	imgH = (int) (dhdRadius * innerGlyphScale * (dhdFirstOuterRadPerc - dhdFirstInnerRadPerc));
+    	imgW = (int) (imgH * 1.03);
+    	imgX = -imgW / 2;
+    	imgY = (int) (-(dhdFirstOuterRadPerc * dhdRadius) + (dhdRadius * (dhdFirstOuterRadPerc - dhdFirstInnerRadPerc)) / 2 - imgH / 2);
+        GL11.glRotatef(-360/19, 0, 0, 1);
+        for (int i = 0; i <= buttonsPerCircle; i++) {
+        	GL11.glRotatef(360/19, 0, 0, 1);
+
+        	if (selectedGlyphs.contains(i + 1))
+                GL11.glColor4f(1.0F, 0.0F, 1.0F, 1.0F);
+        	else
+        		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        	
+        	GL11.glBindTexture(GL11.GL_TEXTURE_2D, glyphTextures[i]);
+        	drawImage(imgX, imgY, imgW, imgH);
+        }
         GL11.glPopMatrix();
     }
     
@@ -215,17 +315,20 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
      * and if so, tell the entity to dial.
      */
     public void dial() {
-    	if (tileEntity.dial()) {
+    	//if (tileEntity.dial()) {
     		System.out.println("Dialed");
-    	}
+    		selectedGlyphs.clear();
+    	//}
     }
     
     public void pressButton(int button) {
-    	if (tileEntity.buttonPressed(button)) {
-    		System.out.println("Button could be pressed, highlighting");
-    	} else {
-    		System.out.println("Button could not be pressed, not highlighting");
-    	}
+    	//if (tileEntity.buttonPressed(button)) {
+    	//	System.out.println("Button could be pressed, highlighting");
+    	System.out.println("Pressed button " + button);
+    		selectedGlyphs.add(button);
+    	//} else {
+    	//	System.out.println("Button could not be pressed, not highlighting");
+    	//}
     }
 
     /**
