@@ -3,6 +3,8 @@ package net.minecraft.src.sgc;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.src.GuiButton;
+import net.minecraft.src.RenderEngine;
+import net.minecraft.src.RenderManager;
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.mod_SGC;
 
@@ -67,6 +69,38 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
     }
 
     /**
+     * Draws a textured rectangle at the stored z-value. Args: x, y, width, height
+     */
+    public void drawImage(int x, int y, int w, int h)
+    {
+        float f = 1;//0.0390625F;
+        float f1 = 1;//0.0390625F;
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV(x + 0, y + h, zLevel, 0, h);
+        tessellator.addVertexWithUV(x + w, y + h, zLevel, w, h);
+        tessellator.addVertexWithUV(x + w, y + 0, zLevel, w, 0);
+        tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
+        tessellator.draw();
+    }
+
+    /**
+     * Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height
+     */
+    public void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
+    {
+        float f = 1;//0.0390625F;
+        float f1 = 1;//0.0390625F;
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV(par1 + 0, par2 + par6, zLevel, (float)(par3 + 0) * f, (float)(par4 + par6) * f1);
+        tessellator.addVertexWithUV(par1 + par5, par2 + par6, zLevel, (float)(par3 + par5) * f, (float)(par4 + par6) * f1);
+        tessellator.addVertexWithUV(par1 + par5, par2 + 0, zLevel, (float)(par3 + par5) * f, (float)(par4 + 0) * f1);
+        tessellator.addVertexWithUV(par1 + 0, par2 + 0, zLevel, (float)(par3 + 0) * f, (float)(par4 + 0) * f1);
+        tessellator.draw();
+    }
+    
+    /**
      * Draws the background (i is always 0 as of 1.2.2)
      */
     public void drawDialGui() {
@@ -80,6 +114,17 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
     	//Center button circle
     	double centerButtonRadius = dhdRadius * (dhdCenterRadPerc);
     	drawFullCircle(dhdCX, dhdCY, centerButtonRadius, 1, 62/255f, 62/255f, 1);
+
+    	GL11.glPushMatrix();
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("sgc/images/DHDOuterButton.png"));
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glScaled(0.3, 0.3, 0.3);
+        GL11.glTranslated(150, 150, 0);
+        //drawTexturedModalRect(50, 50, 0, 0, 73, 73);
+        drawImage(50, 50, 75, 73);
+        GL11.glPopMatrix();
     }
     
     public void drawListGui() {
