@@ -43,7 +43,7 @@ public class BlockDHD extends BlockContainer {
 		} else {
 			System.out.println("Tile entity was null!");
 		}
-		ModLoader.getMinecraftInstance().displayGuiScreen(new GUIDHD());
+		ModLoader.getMinecraftInstance().displayGuiScreen(new GUIDHD((TileEntityDHD) world.getBlockTileEntity(x, y, z)));
 		return true;
     }
 

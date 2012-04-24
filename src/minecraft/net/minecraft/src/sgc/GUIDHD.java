@@ -8,6 +8,8 @@ import net.minecraft.src.mod_SGC;
 
 public class GUIDHD extends net.minecraft.src.GuiScreen{
 
+	private TileEntityDHD tileEntity;
+	
 	private GuiButton dialScreenButton;
 	private GuiButton worldListButton;
 	private int page;
@@ -28,6 +30,11 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
 	 * Won't be implemented for now, merely created to save this link:
 	 * http://www.youtube.com/watch?v=NnF6TyHjB1o
 	 */
+	
+	public GUIDHD(TileEntityDHD tileEntity) {
+		super();
+		this.tileEntity = tileEntity;
+	}
 	
 	@Override
 	public void initGui()
@@ -152,7 +159,7 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
             		if (button == 0)
             			this.dial();
             		else if (button >= 1)
-            			System.out.println("Dialed " + mod_SGC.glyphs[button - 1]);
+            			this.pressButton(button);
             	}
             }
     	}
@@ -162,9 +169,18 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
      * Called when the dial button is selected. Should check if a valid address is dialed
      * and if so, tell the entity to dial.
      */
-    public boolean dial() {
-    	System.out.println("MIGHT be dialing!");
-    	return false;
+    public void dial() {
+    	if (tileEntity.dial()) {
+    		System.out.println("Dialed");
+    	}
+    }
+    
+    public void pressButton(int button) {
+    	if (tileEntity.buttonPressed(button)) {
+    		System.out.println("Button could be pressed, highlighting");
+    	} else {
+    		System.out.println("Button could not be pressed, not highlighting");
+    	}
     }
 
     /**
