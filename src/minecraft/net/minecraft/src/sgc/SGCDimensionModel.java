@@ -11,7 +11,7 @@ public class SGCDimensionModel {
 	private String name;
 	private String address;
 	private int dimensionID;
-	private String randomSeed;
+	private long randomSeed;
 	private String worldProvider;
 
 	/**
@@ -64,14 +64,14 @@ public class SGCDimensionModel {
 	/**
 	 * @return the randomSeed
 	 */
-	public String getRandomSeed() {
+	public long getRandomSeed() {
 		return randomSeed;
 	}
 
 	/**
 	 * @param randomSeed the randomSeed to set
 	 */
-	public void setRandomSeed(String randomSeed) {
+	public void setRandomSeed(Long randomSeed) {
 		this.randomSeed = randomSeed;
 	}
 

@@ -36,4 +36,9 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 		return (new StringBuilder()).append("PLANET-").append(name).toString();
 	}
 	
+	@Override
+	public void registerWorldChunkManager() {
+		worldChunkMgr = new WorldChunkManagerSGCBase(worldObj, dimensionModel);
+	}
+	
 }

@@ -7,6 +7,7 @@ package net.minecraft.src.sgc;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class JSONObject {
@@ -82,6 +83,7 @@ public class JSONObject {
 	public boolean exists(String key) {return elements.containsKey(key);}
 	public int size() {return elements.size();}
 	
+	public Set<String> allKeys() {return elements.keySet();}
 	public Object get(String key) {return elements.get(key);}
 	public JSONObject getJSONObject(String key) {Object o = get(key); if (o instanceof JSONObject) return (JSONObject)o; return null;}
 	public String getString(String key) {Object o = get(key); if (o instanceof String) return (String)o; return null;}

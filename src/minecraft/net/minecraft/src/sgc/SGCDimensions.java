@@ -47,18 +47,40 @@ public class SGCDimensions {
 		minecraftia.set("sgX", stargateLocation.get(0));
 		minecraftia.set("sgY", stargateLocation.get(1));
 		minecraftia.set("sgZ", stargateLocation.get(2));
+		minecraftia.set("address", "abcdef");
 		json.set("minecraftia", minecraftia);
 		System.out.println("Should be about to write the JSON to " + sjr.getWorldJSONFile().getAbsolutePath() + " > " + json.serialize());
 		sjr.writeJSONFile(json, sjr.getWorldJSONFile());
 	}
 	
 	public static SGCDimensionModel getModelForAddress(String address) {
+		
+		SGCJSONProcessor jsr = SGCJSONProcessor.getInstance();
+		JSONObject json = jsr.getJSONObject(jsr.getWorldJSONFile());
+		//TODO Dit verder implementeren
+		
 		SGCDimensionModel dimensionModel = new SGCDimensionModel();
 		dimensionModel.setAddress("AadEdeSbvK");
 		dimensionModel.setDimensionID(8);
 		dimensionModel.setName("P3G5C-A231D");
-		dimensionModel.setRandomSeed("RandomSeed");
+		dimensionModel.setRandomSeed(Long.decode("RandomSeed"));
 		return dimensionModel;
+	}
+	
+	public SGCDimensionModel createModelForAddress(String address) {
+		SGCDimensionModel model = new SGCDimensionModel();
+		
+		SGCJSONProcessor jsr = SGCJSONProcessor.getInstance();
+		JSONObject json = jsr.getJSONObject(jsr.getTemplateJSONFile());
+		if (json.allKeys().contains(address)) {
+			//Was a template, use that template to create the new model!
+			JSONObject planet = json.getJSONObject(address);
+		} else {
+			model.setAddress(address);
+			
+		}
+		
+		return model;
 	}
 	
 }
