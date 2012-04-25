@@ -2,6 +2,10 @@ package net.minecraft.src.sgc;
 
 import java.util.Vector;
 
+import net.minecraft.src.ModLoader;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.World;
+import net.minecraft.src.WorldProvider;
 import net.minecraft.src.mod_SGC;
 
 public class TileEntityDHD extends net.minecraft.src
@@ -29,7 +33,23 @@ public class TileEntityDHD extends net.minecraft.src
 	public boolean dial() {
 		if (address.length() == 6) {
 			System.out.println("Dialing " + address);
+			SGCDimensionModel model = mod_SGC.dimensions.getModelForAddress(address);
+			if (model == null)
+				System.out.println("Model was still null!");
+			else {
+				System.out.println("Wow, actually found a model with name " + model.getName());
+				SGCBlocks.blockEventHorizon.setDimensionModel(model);
+				World world = ModLoader.getMinecraftInstance().theWorld;
+				world.setBlock(stargateLocation.get(0), stargateLocation.get(1) + 1, stargateLocation.get(2), SGCBlocks.eventHorizonBlockId);
+				world.setBlock(stargateLocation.get(0), stargateLocation.get(1) + 2, stargateLocation.get(2), SGCBlocks.eventHorizonBlockId);
+				world.setBlock(stargateLocation.get(0) - 1, stargateLocation.get(1) + 1, stargateLocation.get(2), SGCBlocks.eventHorizonBlockId);
+				world.setBlock(stargateLocation.get(0) - 1, stargateLocation.get(1) + 2, stargateLocation.get(2), SGCBlocks.eventHorizonBlockId);
+				world.setBlock(stargateLocation.get(0) + 1, stargateLocation.get(1) + 1, stargateLocation.get(2), SGCBlocks.eventHorizonBlockId);
+				world.setBlock(stargateLocation.get(0) + 1, stargateLocation.get(1) + 2, stargateLocation.get(2), SGCBlocks.eventHorizonBlockId);
+			}
 			address = "";
+			
+			
 			return true;
 		} else
 			return false;
@@ -52,7 +72,38 @@ public class TileEntityDHD extends net.minecraft.src
 	public void setStargateLocation(Vector<Integer> stargateLocation) {
 		this.stargateLocation = stargateLocation;
 		
-		if (mod_SGC.dimensions.getMinecraftiaStargateLocation() == null)
-			mod_SGC.dimensions.setMinecraftiaStargateLocation(stargateLocation);
+		String planetName;
+		WorldProvider wp = ModLoader.getMinecraftInstance().theWorld.worldProvider;
+		if (wp.getClass().isAssignableFrom(WorldProviderSGCBase.class)) {
+			planetName = ((WorldProviderSGCBase)wp).getDimensionModel().getName();
+		} else {
+			planetName = "Minecraftia";
+		}
+		
+		if (mod_SGC.dimensions.getStargateLocation(planetName) == null)
+			mod_SGC.dimensions.setStargateLocation(planetName, stargateLocation);
 	}
+	
+	/**
+     * Reads a tile entity from NBT.
+     */
+    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    {
+    	Vector<Integer> loc = new Vector<Integer>();
+    	loc.add(par1NBTTagCompound.getInteger("gateX"));
+    	loc.add(par1NBTTagCompound.getInteger("gateY"));
+    	loc.add(par1NBTTagCompound.getInteger("gateZ"));
+        super.readFromNBT(par1NBTTagCompound);
+    }
+
+    /**
+     * Writes a tile entity to NBT.
+     */
+    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    {
+    	par1NBTTagCompound.setInteger("gateX", stargateLocation.get(0));
+    	par1NBTTagCompound.setInteger("gateY", stargateLocation.get(1));
+    	par1NBTTagCompound.setInteger("gateZ", stargateLocation.get(2));
+        super.writeToNBT(par1NBTTagCompound);
+    }
 }

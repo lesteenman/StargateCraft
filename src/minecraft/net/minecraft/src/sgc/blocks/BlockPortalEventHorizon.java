@@ -14,6 +14,7 @@ import net.minecraft.src.Teleporter;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldProviderBase;
 import net.minecraft.src.sgc.SGCDimensionModel;
+import net.minecraft.src.sgc.SGCTeleporter;
 import net.minecraft.src.sgc.WorldProviderSGCBase;
 
 /**
@@ -73,7 +74,7 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 
 	@Override
 	public Teleporter getTeleporter() {
-		return null;
+		return new SGCTeleporter(dimensionModel.getName());
 	}
 
 	@Override

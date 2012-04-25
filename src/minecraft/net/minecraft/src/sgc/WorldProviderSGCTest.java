@@ -6,4 +6,14 @@ public class WorldProviderSGCTest extends WorldProviderSGCBase {
 		super(name);
 	}
 
+	public WorldProviderSGCTest() {
+		super();
+	}
+	
+	@Override
+	public void registerWorldChunkManager() {
+		System.out.println("REGISTERING CHUNK MANAGER");
+		worldChunkMgr = new WorldChunkManagerSGCBase(worldObj, dimensionModel);
+	}
+
 }

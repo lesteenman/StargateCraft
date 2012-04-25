@@ -159,7 +159,7 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
         GL11.glTranslated(dhdCX, dhdCY, 0); // Set the origin to be in the center
         
         GL11.glRotatef(-360/19, 0, 0, 1);
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= buttonsPerCircle + 1; i++) {
         	GL11.glRotatef(360/19, 0, 0, 1);
         	
         	drawImage(imgX, imgY, imgW, imgH);
@@ -172,8 +172,8 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
     	imgY = -(int) (dhdSecondOuterRadPerc * dhdRadius);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         
-        GL11.glRotatef(-360/19, 0, 0, 1);
-        for (int i = 0; i <= buttonsPerCircle; i++) {
+        GL11.glRotatef(360/19, 0, 0, 1);
+        for (int i = 0; i <= buttonsPerCircle + 1; i++) {
         	GL11.glRotatef(360/19, 0, 0, 1);
         	
         	if (selectedGlyphs.contains(19 + i))
@@ -202,7 +202,7 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
         GL11.glTranslated(dhdCX, dhdCY, 0); // Set the origin to be in the center
         
         GL11.glRotatef(-360/19, 0, 0, 1);
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= buttonsPerCircle + 1; i++) {
         	GL11.glRotatef(360/19, 0, 0, 1);
         	drawImage(imgX, imgY, imgW, imgH);
         }
@@ -212,8 +212,8 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
     	imgW = (int) (imgH * 1.03);
     	imgX = -imgW / 2;
     	imgY = (int) (-(dhdFirstOuterRadPerc * dhdRadius) + (dhdRadius * (dhdFirstOuterRadPerc - dhdFirstInnerRadPerc)) / 2 - imgH / 2);
-        GL11.glRotatef(-360/19, 0, 0, 1);
-        for (int i = 0; i <= buttonsPerCircle; i++) {
+        GL11.glRotatef(360/19, 0, 0, 1);
+        for (int i = 0; i <= buttonsPerCircle + 1; i++) {
         	GL11.glRotatef(360/19, 0, 0, 1);
 
         	if (selectedGlyphs.contains(i + 1))
@@ -315,20 +315,20 @@ public class GUIDHD extends net.minecraft.src.GuiScreen{
      * and if so, tell the entity to dial.
      */
     public void dial() {
-    	//if (tileEntity.dial()) {
+    	if (tileEntity.dial()) {
     		System.out.println("Dialed");
     		selectedGlyphs.clear();
-    	//}
+    	}
     }
     
     public void pressButton(int button) {
-    	//if (tileEntity.buttonPressed(button)) {
-    	//	System.out.println("Button could be pressed, highlighting");
+    	if (tileEntity.buttonPressed(button)) {
+    		System.out.println("Button could be pressed, highlighting");
     	System.out.println("Pressed button " + button);
     		selectedGlyphs.add(button);
-    	//} else {
-    	//	System.out.println("Button could not be pressed, not highlighting");
-    	//}
+    	} else {
+    		System.out.println("Button could not be pressed, not highlighting");
+    	}
     }
 
     /**

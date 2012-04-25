@@ -48,15 +48,16 @@ public class BlockDHD extends BlockContainer {
 		ModLoader.getMinecraftInstance().displayGuiScreen(new GUIDHD((TileEntityDHD) world.getBlockTileEntity(x, y, z)));
 		return true;
     }
-
+	
     /**
-     * Called whenever the block is added into the world. Args: world, x, y, z
+     * Called when a block is placed using an item. Used often for taking the facing and figuring out how to position
+     * the item. Args: x, y, z, facing
      */
-    public void onBlockAdded(World world, int i, int j, int k)
+    public void onBlockPlaced(World world, int i, int j, int k, int l)
     {
-    	Vector<Integer> l = SGCBlocks.blockStargate.generateStargateAround(world, i, j, k - 10);
+    	Vector<Integer> v = SGCBlocks.blockStargate.generateStargateAround(world, i, j, k - 17, false);
     	TileEntityDHD tileEntity = (TileEntityDHD) world.getBlockTileEntity(i, j, k);
-    	tileEntity.setStargateLocation(l);
+    	tileEntity.setStargateLocation(v);
     }
 
     public TileEntity getBlockEntity()

@@ -4,14 +4,15 @@ import java.io.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.mod_SGC;
 
-public class SGCJSONProcessor extends SGCDimensions {
+public class SGCJSON extends SGCDimensions {
 	
-	private static SGCJSONProcessor instance;
+	private static SGCJSON instance;
 	
-	public static SGCJSONProcessor getInstance() {
+	public static SGCJSON getInstance() {
 		if (instance == null)
-			instance = new SGCJSONProcessor();
+			instance = new SGCJSON();
 		return instance;
 	}
 	
@@ -40,9 +41,14 @@ public class SGCJSONProcessor extends SGCDimensions {
 	    	System.out.println("ERROR: World JSON File was empty!");
 	    	return null;
 	    }
-	    return JSONObject.deserialize(sb.toString());
+	    JSONObject json = JSONObject.deserialize(sb.toString());
+	    return json == null ? new JSONObject(false):json;
 	}
 	
+	/**
+	 * 
+	 * @return A json file containing the coordinates of the stargate on planets
+	 */
 	public File getWorldJSONFile() {
 		Minecraft mc = ModLoader.getMinecraftInstance();
 		File path = new File(mc.mcDataDir.getAbsolutePath(), "saves/"+mc.theWorld.getWorldInfo().getWorldName()+"/minecraftia.sgcp");
@@ -54,9 +60,13 @@ public class SGCJSONProcessor extends SGCDimensions {
 		return path;
 	}
 	
+	/**
+	 * 
+	 * @return A json file containing information needed to set up dimensions
+	 */
 	public File getGlobalJSONFile() {
 		Minecraft mc = ModLoader.getMinecraftInstance();
-		File path = new File(mc.mcDataDir.getAbsolutePath(), "mods/sgc/sgcPlanets.sgcp");
+		File path = new File(mod_SGC.modFolder, "SGCPlanets.sgcp");
 		try {
 			path.createNewFile();
 		} catch (IOException e) {
@@ -65,9 +75,13 @@ public class SGCJSONProcessor extends SGCDimensions {
 		return path;
 	}
 	
+	/**
+	 * 
+	 * @return A json file containing the world templates
+	 */
 	public File getTemplateJSONFile() {
 		Minecraft mc = ModLoader.getMinecraftInstance();
-		File path = new File(mc.mcDataDir.getAbsolutePath(), "mods/sgc/sgcTemplatePlanets.sgcp");
+		File path = new File(mod_SGC.modFolder, "SGCTemplates.sgcp");
 		try {
 			path.createNewFile();
 		} catch (IOException e) {

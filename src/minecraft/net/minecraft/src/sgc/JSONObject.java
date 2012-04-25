@@ -172,6 +172,8 @@ public class JSONObject {
 			else if (e instanceof String) sb.append("\""+((String)e).replace("\"","\\\"")+"\"");
 			else if (e instanceof JSONInt) sb.append(((JSONInt)e).toString());
 			else if (e instanceof JSONDouble) sb.append(((JSONDouble)e).toString());
+			else if (e instanceof Long) sb.append("\"" + (Long)e + "\"").toString();
+			else System.out.println("Got at end!");
 		}
 		sb.append(isArray() ? "]" : "}");
 		return sb;

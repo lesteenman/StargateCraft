@@ -1,4 +1,6 @@
 package net.minecraft.src;
+import java.io.File;
+
 import net.minecraft.src.sgc.*;
 
 public class mod_SGC extends BaseMod {
@@ -8,8 +10,8 @@ public class mod_SGC extends BaseMod {
 			"t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"
 	};
 	public static mod_SGC instance;
-	public static final String modFolder = "/sgc";
 	public static SGCDimensions dimensions;
+	public static File modFolder;
 
 	public mod_SGC() {
 		instance = this;
@@ -22,11 +24,13 @@ public class mod_SGC extends BaseMod {
 
 	@Override
 	public void load() {
+		modFolder = new File(ModLoader.getMinecraftInstance().mcDataDir.getAbsolutePath(), "mods/sgc");
 		System.out.println("mod_SGC loaded!");
 		
 		new net.minecraft.src.sgc.SGCBlocks();
 		
 		dimensions = new SGCDimensions();
+		dimensions.registerPlanets();
 		
 		//Some test code to try if we can load worldproviders based on a name
 		try {

@@ -4,7 +4,7 @@ import net.minecraft.src.WorldProviderBase;
 
 public abstract class WorldProviderSGCBase extends WorldProviderBase {
 
-	private SGCDimensionModel dimensionModel;
+	protected SGCDimensionModel dimensionModel;
 	private String name;
 	private int dimensionID;
 	
@@ -13,6 +13,15 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 	 * @param name The name of this planet; Used to save this particular planet
 	 */
 	public WorldProviderSGCBase(String name) {
+		super();
+		this.name = name;
+	}
+	
+	public WorldProviderSGCBase() {
+		super();
+	}
+	
+	public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -23,7 +32,15 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 	public void setDimensionModel(SGCDimensionModel model) {
 		this.dimensionModel = model;
 		this.dimensionID = model.getDimensionID();
-		System.out.println("Set dimensionID to " + dimensionID);
+		this.name = model.getName();
+	}
+	
+	/**
+	 * Gets the model for the dimension/planet this worldprovider represents
+	 * @return model
+	 */
+	public SGCDimensionModel getDimensionModel() {
+		return this.dimensionModel;
 	}
 
 	@Override
@@ -33,12 +50,11 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 	
 	public String getSaveFolderName()
 	{
-		return (new StringBuilder()).append("PLANET-").append(name).toString();
+		return (new StringBuilder()).append(name).toString();
 	}
 	
 	@Override
 	public void registerWorldChunkManager() {
 		worldChunkMgr = new WorldChunkManagerSGCBase(worldObj, dimensionModel);
 	}
-	
 }
