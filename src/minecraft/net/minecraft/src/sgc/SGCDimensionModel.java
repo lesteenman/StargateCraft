@@ -79,7 +79,11 @@ public class SGCDimensionModel {
 	 * @return the worldProvider
 	 */
 	public WorldProviderSGCBase getWorldProvider() {
-		return SGCDimensions.getProviderForClassName(worldProvider);
+		System.out.println("Going to return a WorldProvider, provider=" + worldProvider + ", name=" + name);
+		WorldProviderSGCBase p = SGCDimensions.getProviderForClassName(worldProvider);
+		p.setName(name);
+		p.setDimensionModel(this);
+		return p;
 	}
 
 	/**

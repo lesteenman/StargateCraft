@@ -2,8 +2,8 @@ package net.minecraft.src.sgc;
 
 public class WorldProviderSGCTest extends WorldProviderSGCBase {
 
-	public WorldProviderSGCTest(String name) {
-		super(name);
+	public WorldProviderSGCTest(String name, int id) {
+		super(name, id);
 	}
 
 	public WorldProviderSGCTest() {

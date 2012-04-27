@@ -1,5 +1,8 @@
 package net.minecraft.src.sgc;
 
+import net.minecraft.src.ChunkProviderFlat;
+import net.minecraft.src.ChunkProviderHell;
+import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.WorldProviderBase;
 
 public abstract class WorldProviderSGCBase extends WorldProviderBase {
@@ -12,8 +15,9 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 	 * Represents a dimension or 'Planet'
 	 * @param name The name of this planet; Used to save this particular planet
 	 */
-	public WorldProviderSGCBase(String name) {
+	public WorldProviderSGCBase(String name, int dimensionID) {
 		super();
+		this.dimensionID = dimensionID;
 		this.name = name;
 	}
 	
@@ -45,6 +49,7 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 
 	@Override
 	public int getDimensionID() {
+		System.out.println(" returning " + dimensionID);
 		return dimensionID;
 	}
 	
@@ -57,4 +62,12 @@ public abstract class WorldProviderSGCBase extends WorldProviderBase {
 	public void registerWorldChunkManager() {
 		worldChunkMgr = new WorldChunkManagerSGCBase(worldObj, dimensionModel);
 	}
+
+    /**
+     * Returns the chunk provider back for the world provider
+     */
+    /*public IChunkProvider getChunkProvider()
+    {
+        return new ChunkProviderFlat(worldObj, worldObj.getSeed());
+    }*/
 }

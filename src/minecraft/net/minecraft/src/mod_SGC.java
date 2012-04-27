@@ -12,6 +12,7 @@ public class mod_SGC extends BaseMod {
 	public static mod_SGC instance;
 	public static SGCDimensions dimensions;
 	public static File modFolder;
+	public static Achievement sgAchievement;
 
 	public mod_SGC() {
 		instance = this;
@@ -46,4 +47,9 @@ public class mod_SGC extends BaseMod {
 		}
 	}
 
+	public static void addAchievements() {
+		sgAchievement = new Achievement(89, "sgAchievement", -5, -5, Item.goldNugget, null);
+		sgAchievement.registerAchievement();
+		ModLoader.addAchievementDesc(sgAchievement, "Cold bones", "You went through the stargate!");
+	}
 }

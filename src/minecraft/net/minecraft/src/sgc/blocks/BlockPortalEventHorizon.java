@@ -1,5 +1,9 @@
 package net.minecraft.src.sgc.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.src.Achievement;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockPortalBase;
@@ -14,6 +18,7 @@ import net.minecraft.src.Teleporter;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldProviderBase;
 import net.minecraft.src.sgc.SGCDimensionModel;
+import net.minecraft.src.sgc.SGCDimensions;
 import net.minecraft.src.sgc.SGCTeleporter;
 import net.minecraft.src.sgc.WorldProviderSGCBase;
 
@@ -62,14 +67,25 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 	@Override
     public boolean isPortalImmediate()
     {
-        return false;
+        return true;
+    }
+	
+	public List canTeleportFromDimension()
+    {
+		int i = ModLoader.getMinecraftInstance().thePlayer.dimension;
+        ArrayList arraylist = new ArrayList();
+        arraylist.add(Integer.valueOf(i));
+        return arraylist;
     }
 
 	@Override
 	public WorldProviderBase getDimension() {
-		WorldProviderSGCBase provider = dimensionModel.getWorldProvider();
-		provider.setDimensionModel(dimensionModel);
-		return provider;
+		if (dimensionModel.getAddress().equals(SGCDimensions.minecraftiaAddress)) {
+			return (WorldProviderBase) DimensionAPI.getProviderByDimension(0);
+		} else {
+			WorldProviderSGCBase provider = (WorldProviderSGCBase) DimensionAPI.getProviderByDimension(dimensionModel.getWorldProvider().getDimensionID());
+			return provider;
+		}
 	}
 
 	@Override
@@ -79,6 +95,15 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 
 	@Override
 	public String getEnteringMessage() {
+		//TODO Try setting the seed right here
+		System.out.println("Could actually set the seed here! Would set it to " + dimensionModel.getRandomSeed());
+
+		/*SGCJSON jsr = SGCJSON.getInstance();
+		JSONObject json = jsr.getJSONObject(jsr.getGlobalJSONFile());
+		String address = mod_SGC.dimensions.getAddressForName(targetName);
+		Long seed = Long.valueOf(json.getJSONObject(address).getString("seed"));
+		System.out.println("Would now set the world to use seed " + seed);*/
+		
 		String enteringMessage = "Now traveling to " + dimensionModel.getName();
 		return enteringMessage;
 	}
@@ -132,4 +157,8 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
         return null;
     }
 
+    public Achievement triggerAchievement()
+    {
+        return null;
+    }
 }

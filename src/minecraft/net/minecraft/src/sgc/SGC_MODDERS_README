@@ -1,5 +1,5 @@
 To add new mobs: ModLoader.addSpawn, passing in the biome you want it to spawn in.
-To add a new dimension: create a WorldProviderSGCBase, create a WorldChunkManager for it and add BiomeGenBases to that, 
+To add a new dimension: create a WorldProviderSGCBase, create a WorldChunkManager for it and add BiomeGenBase(s) to that, 
     then add the class name of the worldProvider to mods/SGC/SGCTemplates.sgcp , in the array of 'worldProviders:'.
     
         BIOMEGENBASE SUBCLASSES
