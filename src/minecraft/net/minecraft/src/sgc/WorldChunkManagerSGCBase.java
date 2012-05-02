@@ -3,12 +3,17 @@ package net.minecraft.src.sgc;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.BiomeGenDesert;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldChunkManager;
+import net.minecraft.src.WorldProvider;
 
 public class WorldChunkManagerSGCBase extends WorldChunkManager {
+	
+	private static String lastWorldName = "";
 
 	/**
 	 * Should construct a WorldChunkManager with the seed from the model instead of the default seed.
@@ -25,7 +30,14 @@ public class WorldChunkManagerSGCBase extends WorldChunkManager {
      */
     public BiomeGenBase getBiomeGenAt(int par1, int par2)
     {
-        return new BiomeGenDesert(0);
+    	Minecraft mc = ModLoader.getMinecraftInstance();
+    	WorldProvider wp = mc.theWorld.worldProvider;
+    	if (wp.getClass().isAssignableFrom(WorldProviderSGCBase.class)) {
+        	String worldName = ((WorldProviderSGCBase)wp).getDimensionModel().getName();
+        	if (!lastWorldName.equals(worldName))
+        	    System.out.println("Generating in " + worldName);
+    	}
+        return BiomeGenBase.desert;
     }
 
     /**

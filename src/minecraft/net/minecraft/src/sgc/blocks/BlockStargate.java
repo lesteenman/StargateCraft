@@ -7,6 +7,7 @@ import net.minecraft.src.*;
 import net.minecraft.src.sgc.SGCBlocks;
 import net.minecraft.src.sgc.SGCDimensionModel;
 import net.minecraft.src.sgc.SGCDimensions;
+import net.minecraft.src.sgc.TileEntityDHD;
 import net.minecraft.src.sgc.WorldProviderSGCBase;
 
 public class BlockStargate extends BlockObsidian {
@@ -23,36 +24,48 @@ public class BlockStargate extends BlockObsidian {
 	 * @param generateDHD Whether or not to generate a DHD accompanying the Stargate
 	 */
 	public Vector<Integer> generateStargateAround(World world, int i, int j, int k, boolean generateDHD) {
-		int x, y, z;
+		int x = i; int y = j; int z = k;
 		//Find empty location
 		//TODO: Implement empty location finding
-		for (j = 128; j > 0; j--) {
-			if (world.getBlockMaterial(i, j, k).isSolid() && world.getBlockMaterial(i, j, k).isOpaque()) {
-				Vector<Integer> v = new Vector<Integer>();
-				v.add(i); v.add(j);	v.add(k);
-				generateStargateAt(world, i, j, k);
-				
-				if (generateDHD) {
-					k += 15;
-					int t = j + 6;
-					for (j = j - 6; j < t; j++) {
-						if (!world.getBlockMaterial(i, j, k).isSolid())
-							placeDHDAt(world, i, j, k);
-						j = t;
-					}
-				}
-				
-				return v;
+		for (int h = 128; h > 0; h--) {
+			if (world.getBlockMaterial(i, h, k).isSolid() && world.getBlockMaterial(i, h, k).isOpaque()) {
+				x = i; y = h; z = k;
+				h = -1;
 			}
 		}
 
 		//Place the gate
-		x = i; y = j; z = k;
-		this.generateStargateAt(world, i, j, k);
+		this.generateStargateAt(world, x, y, z);
+
+		Vector<Integer> sgl = new Vector<Integer>();
+		sgl.add(x); sgl.add(y);	sgl.add(z);
 		
-		Vector<Integer> v = new Vector<Integer>();
-		v.add(i); v.add(j);	v.add(k);
-		return v;
+		if (generateDHD) {
+			i = x;
+			k = z + 15;
+			j = y;
+			int t = j + 45;
+			System.out.println("Generating a DHD, starting to look at " + k + "," + j + "," + t);
+			for (j -= 6; j < t; j++) {
+				System.out.println("Found " + world.getBlockId(i, j, k));
+				if (!world.getBlockMaterial(i, j, k).isSolid()) {
+					System.out.println("Placing the DHD at " + i + "," + j + "," + k);
+					placeDHDAt(world, i, j, k);
+					TileEntityDHD te = (TileEntityDHD) world.getBlockTileEntity(i, j, k);
+					te.setStargateLocation(sgl);
+					j = t;
+				} else if (j == t-1) {
+					placeDHDAt(world, i, j, k);
+					TileEntityDHD te = (TileEntityDHD) world.getBlockTileEntity(i, j, k);
+					te.setStargateLocation(sgl);
+					//j = t;
+				}
+			}
+		} else {
+			System.out.println("NOT GENERATING A DHD!?!!!?!!");
+		}
+		
+		return sgl;
 	}
 	
 	public void placeDHDAt(World world, int i, int j, int k) {

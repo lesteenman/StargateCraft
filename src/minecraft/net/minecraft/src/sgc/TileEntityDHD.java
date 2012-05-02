@@ -32,8 +32,19 @@ public class TileEntityDHD extends net.minecraft.src
 	
 	public boolean dial() {
 		if (address.length() == 6) {
+			
+			//Can't dial minecraftia if it's on it
+			int currentID = ModLoader.getMinecraftInstance().thePlayer.dimension;
+			if (currentID < 1 && address.equals(mod_SGC.dimensions.minecraftiaAddress))
+					return false;
+			
 			System.out.println("Dialing " + address);
 			SGCDimensionModel model = mod_SGC.dimensions.getModelForAddress(address);
+			
+			//Can't dial the current planet
+			if (currentID == model.getDimensionID())
+				return false;
+				
 			if (model == null)
 				System.out.println("Model was still null!");
 			else {
@@ -70,6 +81,7 @@ public class TileEntityDHD extends net.minecraft.src
 	 * @param stargateLocation the stargateLocation to set
 	 */
 	public void setStargateLocation(Vector<Integer> stargateLocation) {
+		System.out.println("Set the stargate location in TileEntityDHD");
 		this.stargateLocation = stargateLocation;
 		
 		String planetName;

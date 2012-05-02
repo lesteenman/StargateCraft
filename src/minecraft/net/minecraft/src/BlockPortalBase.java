@@ -86,6 +86,6 @@ public abstract class BlockPortalBase extends Block
 
     public Achievement triggerAchievement()
     {
-        return null;
+        return mod_SGC.sgAchievement;
     }
 }

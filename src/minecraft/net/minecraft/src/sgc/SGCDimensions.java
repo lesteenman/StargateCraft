@@ -14,8 +14,23 @@ import net.minecraft.src.ModLoader;
 public class SGCDimensions {
 
 	public static WorldProviderSGCBase getProviderForClassName(String className) {
-		return new WorldProviderSGCTest("P5C8T-Test");
+		System.out.println("Trying to get a provider for " + className);
+		WorldProviderSGCBase p = null;
+		try {
+			Class providerClass = Class.forName(className);
+			p = (WorldProviderSGCBase) providerClass.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+				
+		return p;
 	}
+
+	public static final String minecraftiaAddress = "abcdef";
 	
 	public Vector<Integer> getStargateLocation(String name) {
 		SGCJSON sjr = SGCJSON.getInstance();
@@ -39,22 +54,29 @@ public class SGCDimensions {
 
 	public void setStargateLocation(String name, Vector<Integer> stargateLocation) {
 		SGCJSON sjr = SGCJSON.getInstance();
-		JSONObject json = sjr.getJSONObject(sjr.getWorldJSONFile());
-		if (json == null)
-			json = new JSONObject(false);
+		JSONObject worldJson = sjr.getJSONObject(sjr.getWorldJSONFile());
+		
+		if (worldJson == null)
+			worldJson = new JSONObject(false);
 
-		if (getStargateLocation(name) == null) {
-			JSONObject minecraftia = new JSONObject(false);
-			json.set(name, minecraftia);
-			sjr.writeJSONFile(json, sjr.getWorldJSONFile());
+		//Check if this save had already created a local file and if not, do so,
+		//with Minecraftia's seed in it.
+		if (!worldJson.allKeys().contains("minecraftiaSeed")) {
+			worldJson.set("minecraftiaSeed", ""+ModLoader.getMinecraftInstance().theWorld.getWorldInfo().getSeed());
 		}
-		JSONObject minecraftia = json.getJSONObject(name);
+		
+		if (getStargateLocation(name) == null) {
+			JSONObject p = new JSONObject(false);
+			worldJson.set(name, p);
+			sjr.writeJSONFile(worldJson, sjr.getWorldJSONFile());
+		}
+		JSONObject minecraftia = worldJson.getJSONObject(name);
 		minecraftia.set("sgX", (int)stargateLocation.get(0));
 		minecraftia.set("sgY", (int)stargateLocation.get(1));
 		minecraftia.set("sgZ", (int)stargateLocation.get(2));
-		json.set(name, minecraftia);
+		worldJson.set(name, minecraftia);
 
-		sjr.writeJSONFile(json, sjr.getWorldJSONFile());
+		sjr.writeJSONFile(worldJson, sjr.getWorldJSONFile());
 	}
 
 	public static SGCDimensionModel getModelForAddress(String address) {
@@ -62,9 +84,13 @@ public class SGCDimensions {
 		SGCJSON jsr = SGCJSON.getInstance();
 		JSONObject json = jsr.getJSONObject(jsr.getGlobalJSONFile());
 		JSONObject jsonModel;
-		if (json.allKeys() == null || !json.allKeys().contains(address)) {
+		System.out.println("Checking  if " + address + " is equal to " + minecraftiaAddress);
+		if ((json.allKeys() == null || !json.allKeys().contains(address)) && !address.equals(minecraftiaAddress)) {
 			if (!addressValid(address))
 				return null;
+			
+			System.out.println("And now making a dimensionModel for it");
+			
 			createJSONForAddress(address);
 
 			SGCDimensionModel m = getModelForAddress(address);
@@ -76,13 +102,38 @@ public class SGCDimensions {
 
 		json = jsr.getJSONObject(jsr.getGlobalJSONFile());
 		JSONObject p = json.getJSONObject(address);
-
+		
 		SGCDimensionModel dimensionModel = new SGCDimensionModel();
-		dimensionModel.setAddress(address);
-		dimensionModel.setDimensionID(p.getInt("id"));
-		dimensionModel.setName(p.getString("name"));
-		dimensionModel.setRandomSeed(Long.parseLong(p.getString("seed")));
+
+		JSONObject templateJson = jsr.getJSONObject(jsr.getTemplateJSONFile());
+		if (address.equals(minecraftiaAddress)) {
+			JSONObject planetJson = jsr.getJSONObject(jsr.getWorldJSONFile());
+			
+			dimensionModel.setAddress(address);
+			dimensionModel.setDimensionID(0);
+			dimensionModel.setName("Minecraftia");
+			dimensionModel.setRandomSeed(Long.valueOf(planetJson.getString("minecraftiaSeed")));
+		} else {
+			dimensionModel.setAddress(address);
+			dimensionModel.setDimensionID(p.getInt("id"));
+			dimensionModel.setName(p.getString("name"));
+			dimensionModel.setWorldProvider(p.getString("worldProvider"));
+			dimensionModel.setRandomSeed(Long.parseLong(p.getString("seed")));
+		}
 		return dimensionModel;
+	}
+	
+	public static String getAddressForName(String name) {
+		String address = null;
+		SGCJSON jsr = SGCJSON.getInstance();
+		JSONObject json = jsr.getJSONObject(jsr.getGlobalJSONFile());
+		
+		for (String key:json.allKeys()) {
+			if (json.get(key)!= null && json.get(key) instanceof JSONObject && json.getJSONObject(key).getString("name").equals(name))
+				return json.getJSONObject(key).getString("address");
+		}
+		
+		return address;
 	}
 
 	private static boolean addressValid(String address) {
@@ -177,9 +228,11 @@ public class SGCDimensions {
 	 */
 	public void registerPlanets() {
 		SGCJSON jsr = SGCJSON.getInstance();
+		
 		JSONObject globalJson = jsr.getJSONObject(jsr.getGlobalJSONFile());
 		for (String key:globalJson.allKeys()) {
 			if (globalJson.get(key) instanceof JSONObject) {
+				System.out.println("Registering address " + key);
 				SGCDimensionModel m = getModelForAddress(key);
 				WorldProviderSGCBase p = new WorldProviderSGCTest();
 				p.setName(m.getName());

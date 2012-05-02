@@ -41,6 +41,7 @@ public class SGCJSON extends SGCDimensions {
 	    	System.out.println("ERROR: World JSON File was empty!");
 	    	return null;
 	    }
+	    System.out.println("Read: " + sb.toString());
 	    JSONObject json = JSONObject.deserialize(sb.toString());
 	    return json == null ? new JSONObject(false):json;
 	}
