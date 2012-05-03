@@ -116,7 +116,7 @@ public class SGCDimensions {
 			JSONObject planetJson = jsr.getJSONObject(jsr.getWorldJSONFile());
 			
 			dimensionModel.setAddress(address);
-			dimensionModel.setDimensionID(0);
+			dimensionModel.setDimensionID(ModLoader.getMinecraftInstance().thePlayer.dimension);
 			dimensionModel.setName("Minecraftia");
 			dimensionModel.setRandomSeed(Long.valueOf(planetJson.getString("minecraftiaSeed")));
 		} else {

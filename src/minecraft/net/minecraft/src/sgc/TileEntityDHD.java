@@ -42,7 +42,7 @@ public class TileEntityDHD extends net.minecraft.src
 			SGCDimensionModel model = mod_SGC.dimensions.getModelForAddress(address);
 			
 			//Can't dial the current planet
-			if (currentID == model.getDimensionID())
+			if (currentID == model.getDimensionID() && !address.equals(mod_SGC.dimensions.minecraftiaAddress))
 				return false;
 				
 			if (model == null)

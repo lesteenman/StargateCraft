@@ -46,7 +46,7 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 	@Override
     public boolean isPortalImmediate()
     {
-        return true;
+        return false;
     }
 	
 	public List canTeleportFromDimension()
@@ -63,13 +63,13 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 		if (dimensionModel == null)
 			return (WorldProviderBase) DimensionAPI.getProviderByDimension(0);
 		
-		if (dimensionModel.getAddress().equals(SGCDimensions.minecraftiaAddress)) {
+		/*if (dimensionModel.getAddress().equals(SGCDimensions.minecraftiaAddress)) {
 			System.out.println("RETURNING THE MINECRAFTIA ADDRESS");
 			return (WorldProviderBase) DimensionAPI.getProviderByDimension(0);
-		} else {
+		} else {*/
 			WorldProviderSGCBase provider = (WorldProviderSGCBase) DimensionAPI.getProviderByDimension(dimensionModel.getDimensionID());
 			return provider;
-		}
+		//}
 	}
 
 	@Override
@@ -134,11 +134,20 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 	}
 
     /**
-     * Return null it is walk-through
+     * Return null because it is walk-through
      */
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int i)
     {
         return null;
+    }
+
+    /**
+     * The ID that is used when returning to Minecraftia. To use this ID, the event horizon's
+     * ID must be set to the current dimension ID.
+     */
+    public int returnsPlayerToDimension()
+    {
+        return 0;
     }
 
     public Achievement triggerAchievement()

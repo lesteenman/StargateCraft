@@ -22,8 +22,6 @@ public class SGCTeleporter extends TeleporterCustom {
 	}
 
 	public boolean placeInExistingPortal(World world, Entity entity) {
-		
-		
 		System.out
 				.println("Placing in existing portal, could now set the Seed");
 		Vector<Integer> target = mod_SGC.dimensions
@@ -34,8 +32,8 @@ public class SGCTeleporter extends TeleporterCustom {
 		}
 
 		int i = target.get(0);	int j = target.get(1);	int k = target.get(2);
-		entity.setLocationAndAngles(i, j + 1, k, entity.rotationYaw, 0.0F);
-		entity.motionX *= 5;	entity.motionY *= 5;	entity.motionZ *= 5;
+		entity.setLocationAndAngles(i, j + 1, k - 0.5, entity.rotationYaw + 180, 0.0F);
+		entity.motionX *= 5;	entity.motionY *= 5;	entity.motionZ *= -5;
 		return true;
 	}
 
@@ -53,7 +51,8 @@ public class SGCTeleporter extends TeleporterCustom {
 		Vector<Integer> v = SGCBlocks.blockStargate.generateStargateAround(
 				world, i, j, k, true);
 		mod_SGC.dimensions.setStargateLocation(targetName, v);
-
+		System.out.println("Saving the stargate location at " + v);
+		
 		return true;
 	}
 }
