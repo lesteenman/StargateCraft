@@ -79,6 +79,12 @@ public class SGCDimensions {
 		sjr.writeJSONFile(worldJson, sjr.getWorldJSONFile());
 	}
 
+	/**
+	 * Returns an SGCDimensionModel with all the information of that dimension, as found in 
+	 * the global JSON.
+	 * @param address
+	 * @return the model
+	 */
 	public static SGCDimensionModel getModelForAddress(String address) {
 
 		SGCJSON jsr = SGCJSON.getInstance();

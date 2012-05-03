@@ -32,6 +32,7 @@ public class mod_SGC extends BaseMod {
 		
 		dimensions = new SGCDimensions();
 		dimensions.registerPlanets();
+		addAchievements();
 		
 		//Some test code to try if we can load worldproviders based on a name
 		try {

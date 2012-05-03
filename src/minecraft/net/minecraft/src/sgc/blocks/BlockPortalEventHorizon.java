@@ -17,6 +17,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.Teleporter;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldProviderBase;
+import net.minecraft.src.mod_SGC;
 import net.minecraft.src.sgc.SGCDimensionModel;
 import net.minecraft.src.sgc.SGCDimensions;
 import net.minecraft.src.sgc.SGCTeleporter;
@@ -38,29 +39,7 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 		super(i, j, material);
 	}
 
-    /*public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
-    {
-    	System.out.println("Setting in dimension " + getDimension().getDimensionID());
-		GuiIngame.currentPortal = null;
-        if (entity instanceof EntityPlayer)
-        {
-            EntityPlayer entityplayer = (EntityPlayer)entity;
-            if (!world.isRemote)
-            {
-                DimensionAPI.setInPortal(getDimension(), ModLoader.getMinecraftInstance(), entity, this, this);
-            }
-			if (displayPortalOverlay() && DimensionAPI.isInPortal((EntityPlayerSP)entityplayer, blockID))
-			{
-				GuiIngame.currentPortal = this;
-				entityplayer.setInPortal();
-				if(entityplayer.timeInPortal >= 0.9F)
-				{
-					entityplayer.timeInPortal = 0.0F;
-				}
-			}
-        }
-    }*/
-
+  
 	/**
 	 * Set to immediate because stargates teleport you instantly
 	 */
@@ -80,10 +59,15 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 
 	@Override
 	public WorldProviderBase getDimension() {
+		//Is null if, for example, loading a game
+		if (dimensionModel == null)
+			return (WorldProviderBase) DimensionAPI.getProviderByDimension(0);
+		
 		if (dimensionModel.getAddress().equals(SGCDimensions.minecraftiaAddress)) {
+			System.out.println("RETURNING THE MINECRAFTIA ADDRESS");
 			return (WorldProviderBase) DimensionAPI.getProviderByDimension(0);
 		} else {
-			WorldProviderSGCBase provider = (WorldProviderSGCBase) DimensionAPI.getProviderByDimension(dimensionModel.getWorldProvider().getDimensionID());
+			WorldProviderSGCBase provider = (WorldProviderSGCBase) DimensionAPI.getProviderByDimension(dimensionModel.getDimensionID());
 			return provider;
 		}
 	}
@@ -159,6 +143,7 @@ public class BlockPortalEventHorizon extends BlockPortalBase {
 
     public Achievement triggerAchievement()
     {
-        return null;
+    	return mod_SGC.sgAchievement;
+        //return null;
     }
 }
